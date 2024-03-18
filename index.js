@@ -169,7 +169,7 @@ const catsData = [
     },
 ]
 
-cont emotionsRadios = document.getElementById('emotions-radios')
+const emotionsRadios = document.getElementById('emotions-radios')
 
 function getEmotionsArray(cats){
     const emotionsArray = []
