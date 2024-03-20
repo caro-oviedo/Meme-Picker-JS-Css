@@ -7,16 +7,11 @@ const memeModalInner = document.getElementById('meme-modal-inner')
 const memeModal = document.getElementById('meme-modal')
 const memeModalCloseBtn = document.getElementById('meme-modal-close-btn')
 
-
 emotionRadios.addEventListener('change', highlightCheckedOption)
-
-getImageBtn.addEventListener('click', renderCat)
 
 memeModalCloseBtn.addEventListener('click', closeModal)
 
-function closeModal(){
-    memeModal.style.display = 'none'
-}
+getImageBtn.addEventListener('click', renderCat)
 
 function highlightCheckedOption(e){
     const radios = document.getElementsByClassName('radio')
@@ -24,6 +19,34 @@ function highlightCheckedOption(e){
         radio.classList.remove('highlight')
     }
     document.getElementById(e.target.id).parentElement.classList.add('highlight')
+}
+
+function closeModal(){
+    memeModal.style.display = 'none'
+}
+
+function renderCat(){
+    const catObject = getSingleCatObject()
+    memeModalInner.innerHTML =  `
+        <img 
+        class="cat-img" 
+        src="./images/${catObject.image}"
+        alt="${catObject.alt}"
+        >
+        `
+    memeModal.style.display = 'flex'
+}
+
+function getSingleCatObject(){
+    const catsArray = getMatchingCatsArray()
+    
+    if(catsArray.length === 1){
+        return catsArray[0]
+    }
+    else{
+        const randomNumber = Math.floor(Math.random() * catsArray.length)
+        return catsArray[randomNumber]
+    }
 }
 
 function getMatchingCatsArray(){     
@@ -41,38 +64,9 @@ function getMatchingCatsArray(){
             }            
         })
         return matchingCatsArray 
-    }   
+    }  
 }
 
-function getSingleCatObject(){
-    
-    const catsArray = getMatchingCatsArray()
-    
-    if (catsArray.length === 1){
-        return catsArray[0]
-    }
-    else {
-        const randomNumber = Math.floor(Math.random() * catsArray.length)
-        return catsArray[randomNumber]
-    }
-    
-}
-
-function renderCat(){
-    
-    const catObject = getSingleCatObject()
-    
-    memeModalInner.innerHTML = `
-    <img 
-    class="cat-img" 
-    src="./images/${catObject.image}"
-    alt="${catObject.alt}"
-    >
-    `
-    memeModal.style.display = 'flex'
-
-}
- 
 function getEmotionsArray(cats){
     const emotionsArray = []    
     for (let cat of cats){
@@ -84,7 +78,6 @@ function getEmotionsArray(cats){
     }
     return emotionsArray
 }
-
 
 function renderEmotionsRadios(cats){
         
@@ -106,7 +99,3 @@ function renderEmotionsRadios(cats){
 }
 
 renderEmotionsRadios(catsData)
-
-
-
-
